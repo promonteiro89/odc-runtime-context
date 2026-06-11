@@ -1,91 +1,9 @@
-using System;
 using System.Runtime.InteropServices;
-using OutSystems.ExternalLibraries.SDK;
+using OutSystems.ExternalLibraries.RuntimeContext.Structures;
 
-namespace RuntimeContext;
+namespace OutSystems.ExternalLibraries.RuntimeContext;
 
-// ════════════════════════ Structures ════════════════════════
-
-[OSStructure(Description = "Details about the OutSystems stage the app is currently running on.")]
-public struct StageDetails
-{
-    [OSStructureField(Description = "Stage type: Production, NonProduction, or Unknown.")]
-    public string Classification;
-
-    [OSStructureField(Description = "True when the app is running on a Production stage.")]
-    public bool IsProduction;
-
-    [OSStructureField(Description = "URL the current stage is served from, for example acme-dev.outsystems.app.")]
-    public string RuntimeUrl;
-
-    [OSStructureField(Description = "Leading label of the runtime URL host, for example acme-dev.")]
-    public string Subdomain;
-
-    [OSStructureField(Description = "Internal infrastructure identifier the stage type is derived from, for example runp for Production.")]
-    public string InfrastructureRealm;
-
-    [OSStructureField(Description = "Unique identifier of the current stage.")]
-    public string StageId;
-}
-
-[OSStructure(Description = "Technical details about the server runtime that executes the external logic.")]
-public struct RuntimeDetails
-{
-    [OSStructureField(Description = ".NET runtime version, for example .NET 8.0.x.")]
-    public string DotNetVersion;
-
-    [OSStructureField(Description = "Operating system the runtime runs on, for example Amazon Linux.")]
-    public string OperatingSystem;
-
-    [OSStructureField(Description = "Host name of the server instance.")]
-    public string MachineName;
-
-    [OSStructureField(Description = "Number of logical processors available.")]
-    public int ProcessorCount;
-
-    [OSStructureField(Description = "True if the operating system is 64-bit.")]
-    public bool Is64BitOS;
-
-    [OSStructureField(Description = "True if the running process is 64-bit.")]
-    public bool Is64BitProcess;
-
-    [OSStructureField(Description = "Cloud region the runtime is hosted in, for example us-east-1.")]
-    public string AwsRegion;
-
-    [OSStructureField(Description = "Name of the underlying serverless function.")]
-    public string LambdaFunctionName;
-
-    [OSStructureField(Description = "Memory allocated to the runtime, in MB.")]
-    public int LambdaMemoryMB;
-}
-
-// ════════════════════════ Interface ════════════════════════
-
-[OSInterface(
-    Name = "RuntimeContext",
-    Description = "Provides information about the OutSystems stage and server runtime the app is running on, including whether it is a Production stage.",
-    IconResourceName = "app-icon.png")]
-public interface IRuntimeContext
-{
-    [OSAction(Description = "Returns details about the current stage: its type (Production, NonProduction, or Unknown), identifier, and URL.", ReturnName = "Stage", ReturnDescription = "Details about the current stage (type, identifier, and URL).", IconResourceName = "action-icon.png")]
-    StageDetails GetCurrentStage();
-
-    [OSAction(Description = "Returns True when the app is running on a Production stage.", ReturnName = "IsProduction", ReturnDescription = "True when running on a Production stage; otherwise False.", IconResourceName = "action-icon.png")]
-    bool IsProductionStage();
-
-    [OSAction(Description = "Returns the unique identifier of the current stage.", ReturnName = "StageId", ReturnDescription = "Unique identifier of the current stage.", IconResourceName = "action-icon.png")]
-    string GetStageId();
-
-    [OSAction(Description = "Returns the URL the current stage is served from.", ReturnName = "RuntimeUrl", ReturnDescription = "URL the current stage is served from.", IconResourceName = "action-icon.png")]
-    string GetRuntimeUrl();
-
-    [OSAction(Description = "Returns technical details about the server runtime, such as the .NET version, operating system, CPU, and region.", ReturnName = "Runtime", ReturnDescription = "Technical details about the server runtime (framework, OS, CPU, region).", IconResourceName = "action-icon.png")]
-    RuntimeDetails GetRuntimeDetails();
-}
-
-// ════════════════════════ Implementation ════════════════════════
-
-public sealed class RuntimeContextService : IRuntimeContext
+public class RuntimeContext : IRuntimeContext
 {
     private const string EnvStageId = "OUTSYSTEMS_ENVIRONMENT_ID";
     private const string EnvRuntimeUrl = "OUTSYSTEMS_RUNTIME_URL";

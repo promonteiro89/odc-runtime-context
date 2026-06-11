@@ -2,23 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>RuntimeContext</AssemblyName>
-    <RootNamespace>RuntimeContext</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <Deterministic>true</Deterministic>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>OutSystems.ExternalLibraries.RuntimeContext</RootNamespace>
+    <AssemblyName>OutSystems.ExternalLibraries.RuntimeContext</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Compile-time contract only; ExcludeAssets=runtime keeps the SDK dll out of our build output -->
-    <PackageReference Include="OutSystems.ExternalLibraries.SDK" Version="1.5.0" ExcludeAssets="runtime" />
+    <PackageReference Include="OutSystems.ExternalLibraries.SDK" Version="1.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="app-icon.png" LogicalName="app-icon.png" />
-    <EmbeddedResource Include="action-icon.png" LogicalName="action-icon.png" />
+    <EmbeddedResource Include="Resources\app_icon.png" />
+    <EmbeddedResource Include="Resources\action_icon.png" />
   </ItemGroup>
 
 </Project>
