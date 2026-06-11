@@ -17,6 +17,7 @@ A lightweight .NET 8.0 External Logic component for OutSystems Developer Cloud (
 - [Project Structure](#project-structure)
 - [Build and Deployment](#build-and-deployment)
 - [Notes and Best Practices](#notes-and-best-practices)
+- [Contributing](#contributing)
 - [License](#license)
 
 ---
@@ -166,6 +167,12 @@ RuntimeContext/
 
 - **Production gating:** use `IsProductionStage` to guard production-only behavior. Because the classification fails safe, an `Unknown` result is treated as non-production.
 - **Undocumented signal:** stage detection reads an internal platform value that is verified against current ODC infrastructure but is not part of a documented contract — it may change on a platform update. For irreversible, production-only operations, consider also gating on a per-stage app setting.
+
+---
+
+## Contributing
+
+Contributions, bug reports, and feature requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on development setup, code conventions, and how to submit a pull request.
 
 ---
 
