@@ -18,7 +18,7 @@ public struct RuntimeDetails
         LambdaMemoryMB = 0;
     }
 
-    [OSStructureField(Description = ".NET runtime version, for example .NET 8.0.x.")]
+    [OSStructureField(Description = ".NET runtime version, for example .NET 10.0.x.")]
     public string DotNetVersion { get; set; }
 
     [OSStructureField(Description = "Operating system the runtime runs on, for example Amazon Linux.")]

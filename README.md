@@ -1,11 +1,11 @@
 # Runtime Context for ODC
 
 [![Platform](https://img.shields.io/badge/Platform-OutSystems_ODC-red.svg)](https://www.outsystems.com/odc/)
-[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/download/dotnet/8.0)
+[![.NET](https://img.shields.io/badge/.NET-10.0-blue.svg)](https://dotnet.microsoft.com/download/dotnet/10.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen.svg)](#)
 
-A lightweight .NET 8.0 External Logic component for OutSystems Developer Cloud (ODC) that lets an app discover **which stage it is running on** — and in particular **whether it is Production** — at runtime, with zero configuration.
+A lightweight .NET 10.0 External Logic component for OutSystems Developer Cloud (ODC) that lets an app discover **which stage it is running on** — and in particular **whether it is Production** — at runtime, with zero configuration.
 
 ## Table of Contents
 
@@ -45,7 +45,7 @@ The library is a **stateless reader**. ODC has no built-in, runtime-readable way
 ## Prerequisites
 
 - [OutSystems Developer Cloud (ODC)](https://www.outsystems.com/odc/)
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 No third-party packages — the library depends only on the OutSystems External Libraries SDK (compile-time) and the .NET base class library.
 
@@ -58,7 +58,7 @@ No third-party packages — the library depends only on the OutSystems External 
 dotnet build RuntimeContext.csproj -c Release
 
 # Publish for ODC
-dotnet publish RuntimeContext.csproj -c Release -f net8.0 --no-self-contained
+dotnet publish RuntimeContext.csproj -c Release -f net10.0 --no-self-contained
 ```
 
 After publishing, zip the contents of the `publish/` folder (**excluding** `OutSystems.ExternalLibraries.SDK.dll`) and upload it to the ODC Portal under **External Logic**.

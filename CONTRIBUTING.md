@@ -6,7 +6,7 @@ Thank you for your interest in contributing. This document covers how to report 
 
 ## Reporting Issues
 
-Use [GitHub Issues](https://github.com/promonteiro89/odc-stage-context/issues) to report bugs or request features.
+Use [GitHub Issues](https://github.com/promonteiro89/odc-runtime-context/issues) to report bugs or request features.
 
 When reporting a bug, include:
 - The version of the library you are using
@@ -19,7 +19,7 @@ When reporting a bug, include:
 ## Development Setup
 
 **Requirements:**
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - An ODC organization to test the built package
 
 **Build:**
@@ -29,7 +29,7 @@ dotnet build RuntimeContext.csproj -c Release
 
 **Publish for ODC:**
 ```bash
-dotnet publish RuntimeContext.csproj -c Release -f net8.0 --no-self-contained
+dotnet publish RuntimeContext.csproj -c Release -f net10.0 --no-self-contained
 ```
 
 After publishing, zip the `publish/` output (excluding `OutSystems.ExternalLibraries.SDK.dll`) and upload it to your ODC Portal under **External Logic** to test your changes.
@@ -47,7 +47,7 @@ After publishing, zip the `publish/` output (excluding `OutSystems.ExternalLibra
 
 ## Code Conventions
 
-- Target **net8.0** — do not change the target framework without prior discussion.
+- Target **net10.0** — do not change the target framework without prior discussion.
 - Keep all actions **input-free**. The library reads the environment directly; callers should never need to supply configuration.
 - **Fails safe on the Production check:** if the infrastructure signal is absent or unrecognized, classify as Non-Production. Never return a false Production positive.
 - All environment variable names are named constants — no inline string literals for env var names.
