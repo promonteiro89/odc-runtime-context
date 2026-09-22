@@ -9,17 +9,24 @@ public struct StageDetails
     {
         Classification = string.Empty;
         IsProduction = false;
+        IsClassified = false;
         RuntimeUrl = string.Empty;
         Subdomain = string.Empty;
         InfrastructureRealm = string.Empty;
         StageId = string.Empty;
     }
 
-    [OSStructureField(Description = "Stage type: Production, NonProduction, or Unknown.")]
+    [OSStructureField(Description = "Stage type: Production, NonProduction, Development, or Unknown.")]
     public string Classification { get; set; }
 
-    [OSStructureField(Description = "True when the app is running on a Production stage.")]
+    [OSStructureField(Description = "True when the app is running on a Production stage. " +
+                                    "False also when the stage could not be determined — check IsClassified.")]
     public bool IsProduction { get; set; }
+
+    [OSStructureField(Description = "True when the stage signal was found and recognized. " +
+                                    "When False, Classification is Unknown and MUST NOT be read as " +
+                                    "evidence of a non-production stage.")]
+    public bool IsClassified { get; set; }
 
     [OSStructureField(Description = "URL the current stage is served from, for example acme-dev.outsystems.app.")]
     public string RuntimeUrl { get; set; }

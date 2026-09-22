@@ -10,18 +10,44 @@ namespace OutSystems.ExternalLibraries.RuntimeContext;
 public interface IRuntimeContext
 {
     [OSAction(
-        Description = "Returns details about the current stage: its type (Production, NonProduction, or Unknown), identifier, and URL.",
+        Description = "Returns details about the current stage: its type (Production, NonProduction, Development, or Unknown), identifier, and URL.",
         ReturnName = "Stage",
         ReturnDescription = "Details about the current stage (type, identifier, and URL).",
         IconResourceName = "OutSystems.ExternalLibraries.RuntimeContext.Resources.action_icon.png")]
     StageDetails GetCurrentStage();
 
     [OSAction(
-        Description = "Returns True when the app is running on a Production stage.",
+        Description = "Returns True only when the app is confirmed to be running on a Production stage. " +
+                      "Returns False when the stage is Unknown, so use it to guard production-only logic — " +
+                      "never to enable non-production behavior.",
         ReturnName = "IsProduction",
         ReturnDescription = "True when running on a Production stage; otherwise False.",
         IconResourceName = "OutSystems.ExternalLibraries.RuntimeContext.Resources.action_icon.png")]
     bool IsProductionStage();
+
+    [OSAction(
+        Description = "Returns the raw platform signals read and the rule that produced the stage classification. " +
+                      "Use this when stage detection returns an unexpected result.",
+        ReturnName = "Diagnostics",
+        ReturnDescription = "Raw signals, extracted realm, and the reason behind the classification.",
+        IconResourceName = "OutSystems.ExternalLibraries.RuntimeContext.Resources.action_icon.png")]
+    StageDiagnostics ExplainClassification();
+
+    [OSAction(
+        Description = "Returns the underlying AWS trace and log context, for correlating ODC logs with " +
+                      "infrastructure traces in third-party monitoring tools.",
+        ReturnName = "Trace",
+        ReturnDescription = "X-Ray trace identifier and CloudWatch log group and stream.",
+        IconResourceName = "OutSystems.ExternalLibraries.RuntimeContext.Resources.action_icon.png")]
+    TraceContext GetTraceContext();
+
+    [OSAction(
+        Description = "Returns facts about the lifetime of the runtime process serving this library, " +
+                      "such as how long it has been loaded and whether this is the first call to it.",
+        ReturnName = "Lifecycle",
+        ReturnDescription = "Process uptime and whether this is the first call within the process.",
+        IconResourceName = "OutSystems.ExternalLibraries.RuntimeContext.Resources.action_icon.png")]
+    RuntimeLifecycle GetRuntimeLifecycle();
 
     [OSAction(
         Description = "Returns the unique identifier of the current stage.",

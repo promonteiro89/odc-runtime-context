@@ -6,13 +6,19 @@
     <Nullable>enable</Nullable>
     <RootNamespace>OutSystems.ExternalLibraries.RuntimeContext</RootNamespace>
     <AssemblyName>OutSystems.ExternalLibraries.RuntimeContext</AssemblyName>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
+
+  <!-- The test project lives under tests/; keep it out of the shipped assembly's default glob. -->
+  <ItemGroup>
+    <Compile Remove="tests/**/*.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="OutSystems.ExternalLibraries.SDK" Version="1.5.0" />
+    <InternalsVisibleTo Include="RuntimeContext.Tests" />
   </ItemGroup>
 
   <ItemGroup>
