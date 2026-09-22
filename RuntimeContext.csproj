@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OutSystems.ExternalLibraries.SDK" Version="1.5.0" />
+    <PackageReference Include="OutSystems.ExternalLibraries.SDK" Version="1.7.0" />
     <InternalsVisibleTo Include="RuntimeContext.Tests" />
   </ItemGroup>
 
