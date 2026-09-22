@@ -241,11 +241,39 @@ dotnet test
 
 ---
 
+## Verified Platform Signals
+
+Observed on a live ODC tenant across all four stages (region `eu-central-1`, verified 2026-09-22):
+
+| ODC stage | Stage purpose | Realm | `Classification` | `IsProduction` |
+|---|---|---|---|---|
+| Development | Development | `rundev` | `Development` | `False` |
+| Testing | NonProduction | `runnp` | `NonProduction` | `False` |
+| Pre-Production | NonProduction | **`runnp`** | `NonProduction` | `False` |
+| Production | Production | `runp` | `Production` | **`True`** |
+
+Three facts this establishes:
+
+1. **Testing and Pre-Production are indistinguishable** — both report `runnp`. Three tiers is the maximum resolution the signal supports.
+2. **`Development` is genuinely distinct**, which is why it is reported as its own tier rather than collapsed into `NonProduction`.
+3. **`StageId` equals the ODC environment key exactly**, so it is a reliable identifier for a specific stage even when the tier is ambiguous.
+
+Every stage ran **.NET 10.0.11** on Amazon Linux 2023. External Logic executes in its own dedicated
+Lambda (function names are prefixed `externallibrary-`), **separate from the app's own runtime** —
+which is why `GetRuntimeLifecycle` reports this library's process lifetime and makes no claim about
+the app's cold starts.
+
+> These are observations of an undocumented contract at a point in time, not a guarantee. Use
+> `ExplainClassification` to re-check after any ODC platform update.
+
+---
+
 ## Notes and Best Practices
 
 - **Production gating:** use `IsProductionStage` to guard production-only behavior. It fails closed — an `Unknown` result is never reported as Production. Read the directional warning at the top before inverting the check.
 - **Unknown is not a stage.** `Unknown` means *no answer*, not *non-production*. Branch on `IsClassified` whenever the difference has consequences.
 - **Unrecognized realms fail closed.** If ODC introduces a tier this version does not know, the result is `Unknown` rather than a confident wrong answer. Call `ExplainClassification` to see the unrecognized token and open an issue with it.
+- **Three tiers is the honest maximum.** `Test` and `Pre-Production` share the **same** realm token (`runnp`) and are indistinguishable from the infrastructure signal — see the matrix below. Any library claiming to tell them apart is guessing. If you need that distinction, use the ODC stage identifier (`StageId`) or a per-stage app setting.
 - **Undocumented signal:** stage detection reads an internal platform value that is verified against current ODC infrastructure but is not part of a documented contract — it may change on a platform update. For irreversible, production-only operations, consider also gating on a per-stage app setting.
 - **Not a security boundary.** These signals are environment values in a container, not authenticated claims. Use them for operational convenience — logging, banners, feature flags — never as the sole control for anything security- or money-critical.
 - **Secure Gateway dependency:** classification derives from a signal tied to an optional ODC feature. If your stages return `Unknown`, run `ExplainClassification` — the signal is likely absent rather than misread.

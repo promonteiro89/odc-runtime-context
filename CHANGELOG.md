@@ -41,6 +41,14 @@ misleading. Review any logic that compares `Classification` to a literal string.
   parsing it with `Uri` directly returns success with an **empty** host, treating the host as a
   URI scheme. Covered by regression tests.
 
+### Verified
+
+Validated against a live ODC tenant across all four stages (2026-09-22): `rundev` / `runnp` /
+`runnp` / `runp` for Development / Testing / Pre-Production / Production respectively, with
+`IsProduction` true only on Production. Testing and Pre-Production share the `runnp` realm and are
+**not** distinguishable from the infrastructure signal, which is why classification stops at three
+tiers. See the Verified Platform Signals table in the README.
+
 ### Notes
 
 - Environment values remain **deliberately uncached**. `_X_AMZN_TRACE_ID` is rewritten by the
