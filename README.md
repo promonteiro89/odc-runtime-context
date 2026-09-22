@@ -294,7 +294,7 @@ describe whichever worker answered that call — not a single global process.
 - **Three tiers is the honest maximum.** `Test` and `Pre-Production` share the **same** realm token (`runnp`) and are indistinguishable from the infrastructure signal — see the matrix below. Any library claiming to tell them apart is guessing. If you need that distinction, use the ODC stage identifier (`StageId`) or a per-stage app setting.
 - **Undocumented signal:** stage detection reads an internal platform value that is verified against current ODC infrastructure but is not part of a documented contract — it may change on a platform update. For irreversible, production-only operations, consider also gating on a per-stage app setting.
 - **Not a security boundary.** These signals are environment values in a container, not authenticated claims. Use them for operational convenience — logging, banners, feature flags — never as the sole control for anything security- or money-critical.
-- **Secure Gateway dependency:** classification derives from a signal tied to an optional ODC feature. If your stages return `Unknown`, run `ExplainClassification` — the signal is likely absent rather than misread.
+- **Secure Gateway dependency:** classification derives from a signal tied to an optional ODC feature. If your stages return `Unknown`, run `ExplainClassification` — the signal is likely absent rather than misread. A full survey of the External Logic environment confirms `SECURE_GATEWAY` is the only stage signal ODC exposes ([docs/stage-signal-survey.md](docs/stage-signal-survey.md)); the planned second source is a caller-supplied mapping ([docs/fallback-chain.md](docs/fallback-chain.md)).
 
 ---
 
