@@ -252,6 +252,15 @@ Observed on a live ODC tenant across all four stages (region `eu-central-1`, ver
 | Pre-Production | NonProduction | **`runnp`** | `NonProduction` | `False` |
 | Production | Production | `runp` | `Production` | **`True`** |
 
+The raw signal observed behind the `Realm` column has the shape:
+
+```
+secure-gateway-sd-service-<environment-key>.<realm>.econnectivity.local
+```
+
+The realm is the second dot-label. The environment key embedded in the first label contains
+hyphens but no dots, so it cannot shift that index.
+
 Three facts this establishes:
 
 1. **Testing and Pre-Production are indistinguishable** — both report `runnp`. Three tiers is the maximum resolution the signal supports.
@@ -262,6 +271,15 @@ Every stage ran **.NET 10.0.11** on Amazon Linux 2023. External Logic executes i
 Lambda (function names are prefixed `externallibrary-`), **separate from the app's own runtime** —
 which is why `GetRuntimeLifecycle` reports this library's process lifetime and makes no claim about
 the app's cold starts.
+
+`GetTraceContext` was confirmed to return fully populated values in ODC — an X-Ray trace id, and a
+CloudWatch log group and stream. Across two consecutive invocations the **trace id changed**
+(`Root=1-6ab24495-…` → `Root=1-6ab244bd-…`) while `UptimeMs` advanced from `0` to `38928` on the
+same worker. This is the observed behavior the no-caching rule exists for: caching that value would
+have pinned every correlation for the worker's lifetime to the first request.
+
+ODC may serve concurrent requests from **several workers**, so `IsFirstCallInProcess` and `UptimeMs`
+describe whichever worker answered that call — not a single global process.
 
 > These are observations of an undocumented contract at a point in time, not a guarantee. Use
 > `ExplainClassification` to re-check after any ODC platform update.
