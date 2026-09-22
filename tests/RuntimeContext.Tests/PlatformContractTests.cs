@@ -3,9 +3,9 @@ using Xunit;
 
 namespace OutSystems.ExternalLibraries.RuntimeContext.Tests;
 
-/// Encodes the realm-to-tier contract observed on a live ODC tenant across all four stages
-/// (eu-central-1, 2026-09-22). These are observations of an undocumented platform contract,
-/// not a guarantee — if ODC changes it, these tests are where it should surface.
+// The realm-to-tier mapping observed on a live ODC tenant across all four stages
+// (eu-central-1, 2026-09-22). The platform contract is undocumented, so if it changes
+// these tests are where it surfaces.
 public class PlatformContractTests
 {
     [Theory]
@@ -26,9 +26,8 @@ public class PlatformContractTests
     [Fact]
     public void TestingAndPreProduction_ShareTheSameRealm_SoAreIndistinguishable()
     {
-        // Verified on the live tenant: both stages report "runnp". Any future proposal to map
-        // runnp to a finer tier (Test vs UAT vs Pre-Production) is fabricating resolution the
-        // signal does not carry. This test exists to make that impossible to forget.
+        // Both stages report "runnp" on the live tenant, so mapping runnp to a finer tier
+        // (Test vs UAT vs Pre-Production) would invent resolution the signal does not carry.
         var testing = StageClassifier.Classify("gw.runnp.econnectivity.local");
         var preProduction = StageClassifier.Classify("gw.runnp.econnectivity.local");
 

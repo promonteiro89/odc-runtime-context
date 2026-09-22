@@ -3,7 +3,6 @@ using Xunit;
 
 namespace OutSystems.ExternalLibraries.RuntimeContext.Tests;
 
-/// Pure tests — no environment mutation, no mocks, no DI container.
 public class StageClassifierTests
 {
     private const string Gateway = "somehost.{0}.econnectivity.local";

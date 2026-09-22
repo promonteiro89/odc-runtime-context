@@ -3,8 +3,8 @@ using Xunit;
 
 namespace OutSystems.ExternalLibraries.RuntimeContext.Tests;
 
-/// Every test that mutates the process environment lives in this one class.
-/// xUnit never runs tests within a single class in parallel, so they cannot race each other.
+// Every test that mutates the process environment lives in this one class: xUnit never runs
+// tests within a single class in parallel, so they cannot race each other.
 public class RuntimeContextEnvironmentTests : IDisposable
 {
     private const string SecureGateway = "SECURE_GATEWAY";
@@ -32,9 +32,9 @@ public class RuntimeContextEnvironmentTests : IDisposable
     [Fact]
     public void XRayTraceId_IsReadFresh_NotCached()
     {
-        // The Lambda runtime rewrites this on EVERY invocation. If anyone ever "optimizes" it
-        // into a static readonly field, every trace correlation for the life of the worker
-        // silently pins to the first request. This test must fail if that happens.
+        // The Lambda runtime rewrites this on every invocation. Caching it in a static field
+        // would pin every trace correlation for the worker's lifetime to the first request,
+        // silently. This test fails if that regression is ever introduced.
         var sut = new RuntimeContext();
 
         Set(XRayTraceId, "Root=1-first-invocation");
